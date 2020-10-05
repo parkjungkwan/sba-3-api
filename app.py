@@ -6,7 +6,7 @@ api = Api(app)
 
 class Rest(Resource):
     def get(self):
-        return {'rest': 'Good !'}
+        return {'rest': 'Ok !'}
 
 api.add_resource(Rest, '/')
 
