@@ -9,6 +9,16 @@ class CctvModel:
         print(f'baseurl #### {baseurl}')
         self.reader = FileReader()
 
+    def hook_process(self):
+        print('----------- CCTV & POP ----------')
+        cctv = self.get_cctv()
+        pop = self.get_pop()
+        
+        print(f'CCTV Head: {cctv.head()}')
+        print(f'POP Head: {pop.head()}')
+        
+        
+        
 
     def get_cctv(self):
         reader = self.reader
@@ -16,7 +26,7 @@ class CctvModel:
         reader.fname = 'cctv_in_seoul.csv'
         reader.new_file()
         cctv = reader.csv_to_dframe()
-        print(f'{cctv.head()}')
+        cctv.rename(columns = {cctv.columns[0]: '구별'}, inplace = True)
         return cctv
 
     def get_pop(self):
@@ -25,13 +35,22 @@ class CctvModel:
         reader.fname = 'pop_in_seoul.xls'
         reader.new_file()
         pop = reader.xls_to_dframe(2, 'B,D,G,J,N')
-        print(f'{pop.head()}')
+        pop.rename(columns = {
+            pop.columns[0]: '구별',
+            pop.columns[1]: '인구수',
+            pop.columns[2]: '한국인',
+            pop.columns[3]: '외국인',
+            pop.columns[4]: '고령자',
+            }, inplace = True)
+        print(f'POP Null Checker: {pop["구별"].isnull()}')
+        pop.drop([26], inplace=True)
         return pop
+
+    
 
 
 if __name__ == '__main__':
     model = CctvModel()
-    # model.get_cctv()
-    model.get_pop()
+    model.hook_process();
     
     
