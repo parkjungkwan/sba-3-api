@@ -35,6 +35,6 @@ class FileReader:
         return pd.read_excel(self.new_file(), header = header, usecols = usecols)
 
     def create_gmaps(self):
-        return googlemaps.Client(key='AIzaSyBz9GRH0blpoiLp1co3O5V3hXgwT928jyY')
+        return googlemaps.Client(key='')
 
     
