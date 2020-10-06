@@ -12,10 +12,11 @@ class CrimeModel:
     def hook_process(self):
         print('----------- CRIME & POLICE ----------')
         crime = self.get_crime()
-        print(f'{crime.head()}')
         # self.get_station(crime)
         crime_police = self.get_crime_police()
         print(f'{crime_police.head()}')
+        print(f'{crime_police.columns}')
+
 
     def get_crime(self):
         reader = self.reader
