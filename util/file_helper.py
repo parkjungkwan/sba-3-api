@@ -1,6 +1,15 @@
 from dataclasses import dataclass
 import os
 import pandas as pd
+import xlrd
+'''
+pandas version 1.x 이상 endcoding='UTF-8' 불필요
+ImportError: Missing optional dependency 'xlrd'. 
+pip install xlrd 주의!! anaconda install xlrd 하면 에러 발생
+
+TEST
+'''
+
 @dataclass
 class FileReader:
     # def __init__(self, context, fname, train, test, id, label):
@@ -18,7 +27,10 @@ class FileReader:
         return os.path.join(self.context,self.fname)
 
     def csv_to_dframe(self) -> object:
-        file = self.new_file()
-        return pd.read_csv(file, encoding='UTF-8', thousands=',')
+        return pd.read_csv(self.new_file(), encoding='UTF-8', thousands=',')
+
+    def xls_to_dframe(self, header, usecols) -> object:
+        print(f'PANDAS VERSION: {pd.__version__}')
+        return pd.read_excel(self.new_file(), header = header, usecols = usecols)
 
     
