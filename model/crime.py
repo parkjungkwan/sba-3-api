@@ -13,8 +13,9 @@ class CrimeModel:
         print('----------- CRIME & POLICE ----------')
         crime = self.get_crime()
         print(f'{crime.head()}')
-        self.get_station(crime)
-
+        # self.get_station(crime)
+        crime_police = self.get_crime_police()
+        print(f'{crime_police.head()}')
 
     def get_crime(self):
         reader = self.reader
@@ -47,7 +48,6 @@ class CrimeModel:
             gu_name = [gu for gu in t if gu[-1] == '구'][0]
             gu_names.append(gu_name)
         crime['구별'] = gu_names
-        print('+++++++++++++++++++++')
         
 
         crime.loc[crime['관서명'] == '혜화서', ['구별']] == '종로구'
@@ -62,6 +62,17 @@ class CrimeModel:
         reader.context = os.path.join(baseurl,'saved_data')
         reader.fname = 'crime_police.csv'
         crime.to_csv(reader.new_file())
+
+    def get_crime_police(self):
+        reader = self.reader
+        reader.context = os.path.join(baseurl,'saved_data')
+        reader.fname = 'crime_police.csv'
+        reader.new_file()
+        crime_police = reader.csv_to_dframe()
+        print(f'{crime_police.head()}')
+        return crime_police
+
+
 
 
     
