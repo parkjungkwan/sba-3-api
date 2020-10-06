@@ -17,9 +17,21 @@ class CctvModel:
         reader.new_file()
         cctv = reader.csv_to_dframe()
         print(f'{cctv.head()}')
+        return cctv
+
+    def get_pop(self):
+        reader = self.reader
+        reader.context = os.path.join(baseurl,'data')
+        reader.fname = 'pop_in_seoul.xls'
+        reader.new_file()
+        pop = reader.xls_to_dframe(2, 'B,D,G,J,N')
+        print(f'{pop.head()}')
+        return pop
 
 
 if __name__ == '__main__':
-    cctv = CctvModel()
-    cctv.get_cctv()
+    model = CctvModel()
+    # model.get_cctv()
+    model.get_pop()
+    
     

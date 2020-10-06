@@ -1,26 +1,25 @@
-import pandas as pd
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-from config import basedir
+baseurl = os.path.dirname(os.path.abspath(__file__))
+from util.file_helper import FileReader
 
-class Crime:
+class CrimeModel:
     def __init__(self):
-        pass
+        print(f'baseurl #### {baseurl}')
+        self.reader = FileReader()
 
-    def read_file(self):
-        basedir = os.path.dirname(os.path.abspath(__file__))
-        cctv_seoul = pd.read_csv(os.path.join(basedir,'model','data','cctv_in_seoul','cctv_in_seoul.csv'))
-        print(cctv_seoul.head())
 
-        print(cctv_seoul.sort_values(by='소계',ascending=True))
+    def get_crime(self):
+        reader = self.reader
+        reader.context = os.path.join(baseurl,'data')
+        reader.fname = 'crime_in_seoul.csv'
+        reader.new_file()
+        crime = reader.csv_to_dframe()
+        print(f'{crime.head()}')
 
-        print('#'*50)
-
-        crime_seoul = pd.read_csv(os.path.join(basedir,'model','data','crime_in_seoul','.model/data/crime_in_seoul.csv'))
-        print(crime_seoul.head())
 
 if __name__ == '__main__':
-    t = Crime()
-    t.read_file()
+    crime = CrimeModel()
+    crime.get_crime()
     
