@@ -3,6 +3,7 @@ import os
 import pandas as pd
 import xlrd
 import googlemaps
+import json
 '''
 pandas version 1.x 이상 endcoding='UTF-8' 불필요
 ImportError: Missing optional dependency 'xlrd'. 
@@ -36,5 +37,9 @@ class FileReader:
 
     def create_gmaps(self):
         return googlemaps.Client(key='')
+
+    def json_load(self):
+        return json.load(open(self.new_file()), encoding='UTF-8')
+        
 
     
