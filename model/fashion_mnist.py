@@ -14,15 +14,29 @@ class FashionMnist:
 
     def hook(self):
         image_list = self.get_data()
-        self.preprocess(image_list[0], image_list[1])
+        # self.preprocess(image_list[0], image_list[1])
         model = self.create_model()
         model = self.train_model(model, image_list[0], image_list[1])
         # self.test_model(model, image_list[2], image_list[3])
-        self.model_predict(model, image_list[2], image_list[3], 0)
+        arr = self.model_predict(model, image_list[2], image_list[3], 0)
+        # [predictions, test_images, test_labels]
+        predictions = arr[0]
+        test_labels = arr[2]
+        test_images = arr[1]
+        i = 5
+
+        plt.figure(figsize=(6,3))
+        plt.subplot(1, 2, 1)
+        self.plot_image(i, predictions, test_labels, test_images)
+        plt.subplot(1, 2, 2)
+        self.plot_value_array(i, predictions, test_labels)
+        plt.show()
+        print('=============== END ================')
+
 
     def get_data(self) -> []:
         (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.fashion_mnist.load_data()
-
+        """
         print(f'훈련 행 {train_images.shape[0]} 열 {train_images.shape[1]}')
         print(f'테스트 행 {test_images.shape[0]} 열 {test_images.shape[1]}')
 
@@ -31,7 +45,7 @@ class FashionMnist:
         plt.colorbar()
         plt.grid(False)
         plt.show()
-
+        """
         return [train_images, train_labels, test_images, test_labels]
 
     def preprocess(self, train_images, train_labels):
