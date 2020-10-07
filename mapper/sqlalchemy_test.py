@@ -1,9 +1,12 @@
 import os
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+baseurl = os.path.dirname(os.path.abspath(__file__))
 import json
 from flask import Flask
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
-
+from mapper.serializers import AlchemyEncoder
 
 app = Flask(__name__)
 api = Api(app)
@@ -11,7 +14,7 @@ api = Api(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{}:{}@{}/{}'.format(
     os.getenv('DB_USER', 'root'),
     os.getenv('DB_PASSWORD', 'root'),
-    os.getenv('DB_HOST', 'mysql'),
+    os.getenv('DB_HOST', 'localhost:3600'),
     os.getenv('DB_NAME', 'mariadb')
 )
 db = SQLAlchemy(app)
