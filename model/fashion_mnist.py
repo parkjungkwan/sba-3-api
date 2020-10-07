@@ -3,7 +3,7 @@ import os
 import tensorflow as tf
 from tensorflow import keras
 import matplotlib.pyplot as plt
-
+import numpy as np
 print(tf.version.VERSION)
 
 
@@ -16,10 +16,9 @@ class FashionMnist:
         image_list = self.get_data()
         self.preprocess(image_list[0], image_list[1])
         model = self.create_model()
-        model = train_model(model, image_list[0], image_list[1])
-        test_model(model, image_list[2], image_list[3])
-
-
+        model = self.train_model(model, image_list[0], image_list[1])
+        # self.test_model(model, image_list[2], image_list[3])
+        self.model_predict(model, image_list[2], image_list[3], 0)
 
     def get_data(self) -> []:
         (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.fashion_mnist.load_data()
@@ -72,13 +71,13 @@ class FashionMnist:
 
         print('\n테스트 정확도:', test_acc)
 
+    def model_predict(self, model, test_images, test_labels, index):
+        predictions = model.predict(test_images)
+        pred = predictions[index]
+        answer = test_labels[index]
+        print(f'모델이 예측한 값: {np.argmax(pred)}')
+        print(f'정답 : {answer}')
 
-
-
-
-
-    
-        
 
 
 if __name__ == '__main__':
