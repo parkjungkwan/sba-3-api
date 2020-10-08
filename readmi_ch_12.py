@@ -74,4 +74,18 @@ dnn = bool 함수  + 활성화함수 + 손실함수 + 옵티마이저
 self.w = tf.Variable(tf.zeros(shape=(1)))
 self.b = tf.Variable(tf.zeros(shape=(1)))
 
+
+
+basis가 scalar 일 경우
+3 + 3 + 3  몇 차원 ? 1차원 : shape 1
+
+3 * 3 * 3  몇 차원 ? 3차원 : shape 3
+x * y * z
+
+값은 같고 차원을 늘리는 방법
+
+784 1차원
+28 * 28 2차원
+차원은 다르지만 값은 같다..
+
 """
