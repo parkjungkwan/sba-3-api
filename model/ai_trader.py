@@ -5,8 +5,6 @@ import random
 
 class AiTrader:
 
-    model : object = None
-
     def __init__(self, state_size, action_space=3, model_name='AITrader'):
         self.state_size = state_size
         self.action_space = action_space
@@ -17,6 +15,7 @@ class AiTrader:
         self.epsilon = 1.0
         self.epsilon_final = 0.01
         self.epsilon_decay = 0.995
+        self.model = self.model_builder()
 
     def model_builder(self):
         model = tf.keras.models.Sequential()
@@ -25,9 +24,9 @@ class AiTrader:
         model.add(tf.keras.layers.Dense(units=128, activation='relu'))
         model.add(tf.keras.layers.Dense(units=self.action_space, activation='linear'))
         model.compile(loss='mse', optimizer=tf.keras.optimizers.Adam(lr=0.001))
-        self.model = model
-
-    def batch_model(self, batch_size):
+        return model
+        
+    def batch_train(self, batch_size):
         batch = []
         for i in range(len(self.memory) - batch_size + 1, len(self.memory)):
             batch.append(self.memory[i])
