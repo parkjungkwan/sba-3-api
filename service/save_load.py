@@ -47,7 +47,7 @@ class SaveLoad:
         loss='sparse_categorical_crossentropy', metrics = ['accuracy'])
 
     def train_model(self):
-        checkpoint_path = 'training_1/cp.ckpt'
+        checkpoint_path = os.path.join(baseurl,'training_1","cp.ckpt')
         cp_callback = tf.keras.callbacks.ModelCheckpoint(checkpoint_path,
                                                         save_weights_only = True,
                                                         verbose = 1 )
@@ -66,13 +66,14 @@ class SaveLoad:
         '''
         print('복원된 모델의 정확도 : {:5.2f}%'.format(100 * acc))
         # 파일 이름에 에포크 번호를 포함시킵니다. 
-        checkpoint_path = os.path.join(baseurl,"training_2/cp-{epoch: 04d}.ckpt")
+        checkpoint_path = os.path.join(baseurl,"training_2","cp-{epoch: 04d}.ckpt")
         checkpoint_dir = os.path.dirname(checkpoint_path)
         cp_callback = tf.keras.callbacks.ModelCheckpoint(
             checkpoint_path, verbose = 1, save_weights_only = True,
             # 5번째 에포크마다 가중치를 저장합니다.
             period = 5
         )
+        print(f'{checkpoint_path}')
         self.model.save_weights(checkpoint_path.format(epoch=0))
         self.model.fit(self.train_images, self.train_labels, epochs = 50, callbacks=[cp_callback],
         validation_data = (self.test_images, self.train_labels), verbose = 0)
